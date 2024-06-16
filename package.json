@@ -1,0 +1,6 @@
+{
+  "name": "create-commit-convention",
+  "bin": {
+    "create-commit-convention": "./run.sh"
+  }
+}
