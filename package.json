@@ -1,6 +1,6 @@
 {
   "name": "create-commit-convention",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Lee Jae Yeol <jayur830@naver.com> (https://github.com/jayur830)",
   "bin": {
     "create-commit-convention": "./run.sh"

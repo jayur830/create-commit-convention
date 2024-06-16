@@ -1,4 +1,12 @@
-npm i -D husky @commitlint/cli @commitlint/config-conventional commitizen cz-customizable
+npm i -D \
+  husky \
+  @commitlint/cli \
+  @commitlint/config-conventional \
+  commitizen \
+  cz-customizable
+if [ ! -d '.git' ]; then
+  git init
+fi
 npx husky
 
 echo "module.exports = {
@@ -56,8 +64,14 @@ echo "module.exports = {
   skipQuestions: ['body'],
 };" > .cz-config.js
 
-echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\npnpm commitlint --edit $1' > .husky/commit-msg
-echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nexec < /dev/tty && pnpm cz --hook || true' > .husky/prepare-commit-msg
+if [ -d '.husky' ]; then
+  echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\npnpm commitlint --edit $1' > .husky/commit-msg
+  echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nexec < /dev/tty && pnpm cz --hook || true' > .husky/prepare-commit-msg
+fi
 
-sed -i '' 's/  "scripts": {/  "scripts": {\n    "prepare": "husky",/g' package.json
-sed -i '' 's/  }$/  },\n  "config": {\n    "commitizen": {\n      "path": "node_modules\/cz-customizable"\n    }\n  }/g' package.json
+if [ `grep -c '"prepare": "husky"' package.json` == 0 ]; then
+  sed -i '' 's/  "scripts": {/  "scripts": {\n    "prepare": "husky",/g' package.json
+fi
+if [ `grep -c '"path": "node_modules/cz-customizable"' package.json` == 0 ]; then
+  sed -i '' 's/  }$/  },\n  "config": {\n    "commitizen": {\n      "path": "node_modules\/cz-customizable"\n    }\n  }/g' package.json
+fi
