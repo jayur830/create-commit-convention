@@ -1,15 +1,7 @@
 if [ ! -d '.git' ]; then
   git init
 fi
-if [ -d package-lock.json ]; then
-  npm i -D \
-    husky \
-    @commitlint/cli \
-    @commitlint/config-conventional \
-    commitizen \
-    cz-customizable
-  npx husky
-elif [ -d yarn.lock ]; then
+if [ -d yarn.lock ]; then
   yarn add -D \
     husky \
     @commitlint/cli \
@@ -25,6 +17,14 @@ elif [ -d pnpm-lock.yaml ]; then
     commitizen \
     cz-customizable
   pnpm dlx husky
+else
+  npm i -D \
+    husky \
+    @commitlint/cli \
+    @commitlint/config-conventional \
+    commitizen \
+    cz-customizable
+  npx husky
 fi
 
 echo "module.exports = {
@@ -83,15 +83,15 @@ echo "module.exports = {
 };" > .cz-config.js
 
 if [ -d '.husky' ]; then
-  if [ -d package-lock.json ]; then
-    echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nnpx commitlint --edit $1' > .husky/commit-msg
-    echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nexec < /dev/tty && npx cz --hook || true' > .husky/prepare-commit-msg
-  elif [ -d yarn.lock ]; then
+  if [ -d yarn.lock ]; then
     echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nyarn commitlint --edit $1' > .husky/commit-msg
     echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nexec < /dev/tty && yarn cz --hook || true' > .husky/prepare-commit-msg
   elif [ -d pnpm-lock.yaml ]; then
     echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\npnpm commitlint --edit $1' > .husky/commit-msg
     echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nexec < /dev/tty && pnpm cz --hook || true' > .husky/prepare-commit-msg
+  else
+    echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nnpx commitlint --edit $1' > .husky/commit-msg
+    echo '#!/usr/bin/env sh\n. "$(dirname -- "$0")/_/husky.sh"\n\nexec < /dev/tty && npx cz --hook || true' > .husky/prepare-commit-msg
   fi
 fi
 
