@@ -1,5 +1,8 @@
 # Commit Convention 자동 설치 툴킷
 
+> ### *Deprecated*  
+> 이 프로젝트는 [@opentoyapp/commit-convention](https://github.com/opentoyapp/commit-convention)으로 이관되었습니다.
+
 프로젝트 세팅할 때마다 `husky`, `commitlint`, `commitizen` 등등등 맨날 수동으로 `npm i -D 어쩌구 ...` 하면서 깔았었는데 이게 너무 귀찮아서 그냥 모듈로 만들었습니다.  
 
 ## Usage

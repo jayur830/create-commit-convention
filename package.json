@@ -1,10 +1,7 @@
 {
   "name": "create-commit-convention",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Lee Jae Yeol <jayur830@naver.com> (https://github.com/jayur830)",
-  "bin": {
-    "create-commit-convention": "./run.sh"
-  },
   "repository": {
     "type": "github",
     "url": "https://github.com/jayur830/create-commit-convention"
